@@ -3,6 +3,7 @@ import numpy as np
 import random, os
 from PIL import Image
 from sklearn.model_selection import train_test_split
+from tensorflow.keras.utils import to_categorical
 
 
 class Preproc():
@@ -89,8 +90,10 @@ class Preproc():
         return df
 
     def train_test_split(self):
-        X = self.df['genre']
-        y = np.stack(self.df['image'])
+        genres = list(self.df["genre"].unique())
+        y = self.df["genre"].map(lambda x: genres.index(x))
+        y = to_categorical(y)
+        X = np.stack(self.df['image'])
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
