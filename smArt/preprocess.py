@@ -11,7 +11,7 @@ class Preproc():
         self.size = size
         self.sample_size = sample_size
 
-    def get_all_genres(self):
+    def get_data(self):
 
         #create the listdir
         main = os.listdir(self.file_path)
@@ -32,13 +32,14 @@ class Preproc():
             if len(g) > self.sample_size:
                 i = random.sample(range(len(g)), self.sample_size)
                 for num in i:
-                    with Image.open(str(self.file_path) + str(genre) + "/" + str(g[num])) as im:
+                    with Image.open(self.file_path + genre + "/" + g[num]) as im:
                         img_resized = im.resize(self.size)
                         image_array = np.array(img_resized)
                         string = g[num][:-4]
                         string = string.replace("-"," ")
                         string = string.split("_", maxsplit=1)
                         string.insert(0, genre)
+                        string.append(genre + "/" + g[num])
                         string.append(image_array)
                         paintings_list.append(string)
 
@@ -54,6 +55,7 @@ class Preproc():
                         string = string.replace("-"," ")
                         string = string.split("_", maxsplit=1)
                         string.insert(0, genre)
+                        string.append(genre + "/" + g[num])
                         string.append(image_array)
                         paintings_list.append(string)
 
@@ -71,6 +73,7 @@ class Preproc():
                         string = string.replace("-"," ")
                         string = string.split("_", maxsplit=1)
                         string.insert(0, genre)
+                        string.append(genre + "/" + g[num])
                         string.append(image_array)
                         paintings_list.append(string)
 
@@ -79,5 +82,5 @@ class Preproc():
                             print(counter)
 
         df = pd.DataFrame(paintings_list)
-        df = df.rename(columns = {0:'genre', 1:'artist', 2:'title', 3:'image'})
+        df = df.rename(columns = {0:'genre', 1:'artist', 2:'title', 3:'path', 4:'image'})
         return df
