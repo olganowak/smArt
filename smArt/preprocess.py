@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import random, os
 from PIL import Image
+from sklearn.model_selection import train_test_split
 
 
 class Preproc():
@@ -27,6 +28,7 @@ class Preproc():
         genre_counter = 0
         for genre in genres:
             g = os.listdir(self.file_path + genre)
+            g = [x for x in g if x[0] != "."]
             genre_counter += 1
             print(f"We are processing the genre number {genre_counter} which has {len(g)} images")
             if len(g) > self.sample_size:
@@ -83,4 +85,13 @@ class Preproc():
 
         df = pd.DataFrame(paintings_list)
         df = df.rename(columns = {0:'genre', 1:'artist', 2:'title', 3:'path', 4:'image'})
+        self.df = df
         return df
+
+    def train_test_split(self):
+        X = self.df['genre']
+        y = np.stack(self.df['image'])
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
+        return X_train, X_test, y_train, y_test
