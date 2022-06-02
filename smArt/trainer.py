@@ -1,6 +1,7 @@
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras import models, layers, optimizers
 from sklearn.model_selection import train_test_split
+from tensorflow.keras.callbacks import EarlyStopping
 import pandas as pd
 import numpy as np
 import os
@@ -18,11 +19,11 @@ class Trainer():
         self.y_train = y_train
 
     def load_model(self):
-        input_shape = (self.height, self.width)
-        model = VGG16(weights="imagenet", include_top=False, input_shape=self.input_shape)
+        input_shape = (self.height, self.width, 3)
+        model = VGG16(weights="imagenet", include_top=False, input_shape=input_shape)
         return model
 
-    def set_nontrainable_layers(model):
+    def set_nontrainable_layers(self, model):
         model.trainable = False
         return model
 
@@ -35,7 +36,7 @@ class Trainer():
         dense_layer_2 = layers.Dense(500, activation='relu')
         dense_layer_3 = layers.Dense(500, activation='relu')
         dense_layer_4 = layers.Dense(100, activation='relu')
-        prediction_layer = layers.Dense(4, activation='softmax')
+        prediction_layer = layers.Dense(self.num_genres, activation='softmax')
 
 
         model = models.Sequential([
@@ -51,10 +52,11 @@ class Trainer():
         # $CHALLENGIFY_END
         return model
 
-    def build_model(self, height, width):
+    def build_model(self, height, width, num_genres = 4):
         # $CHALLENGIFY_BEGIN
         self.height = height
         self.width = width
+        self.num_genres = num_genres
         model = self.load_model()
         model = self.add_layers(model)
 
@@ -66,23 +68,20 @@ class Trainer():
     def run(self):
         """set and train the pipeline"""
         self.model = self.build_model(self.height, self.width)
-        self.model.fit(self.X_train, self.y_train, validation_split=0.3)
+
+        es = EarlyStopping(monitor = 'val_accuracy',
+                   mode = 'max',
+                   patience = 5,
+                   verbose = 1,
+                   restore_best_weights = True)
+
+        self.model.fit(self.X_train, self.y_train,
+                    validation_split=0.3,
+                    epochs=50,
+                    batch_size=16,
+                    callbacks=[es])
 
     def evaluate(self, X_test, y_test):
         """evaluates the pipeline on df_test and return the RMSE"""
         accuracy = self.model.evaluate(X_test, y_test)[1]
         return accuracy
-
-#if __name__ == "__main__":
-    #df = get_data()
-    #df = clean_data(df)
-    # prepare X and y
-    #y = df.pop("fare_amount")
-    #X = df
-    # Hold out
-    #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-    # train
-    #pipe = Trainer(X_train, y_train)
-    #pipe.run()
-    # evaluate
-    #print(pipe.evaluate(X_test, y_test))
