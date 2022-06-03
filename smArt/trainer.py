@@ -4,10 +4,8 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping
 import pandas as pd
 import numpy as np
-import os
-import matplotlib.pyplot as plt
-import seaborn as sns
-import random
+from sklearn.externals import joblib
+
 
 class Trainer():
     def __init__(self, X_train, y_train):
@@ -85,3 +83,8 @@ class Trainer():
         """evaluates the pipeline on df_test and return the RMSE"""
         accuracy = self.model.evaluate(X_test, y_test)[1]
         return accuracy
+
+    def save_model(self):
+        """Save the model into a .joblib format"""
+        joblib.dump(self.model, 'model.joblib')
+        print("model.joblib saved locally")
