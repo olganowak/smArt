@@ -80,8 +80,15 @@ class Trainer():
                     epochs=50,
                     batch_size=16,
                     callbacks=[es])
+        return self.model
 
     def evaluate(self, X_test, y_test):
         """evaluates the pipeline on df_test and return the RMSE"""
         accuracy = self.model.evaluate(X_test, y_test)[1]
         return accuracy
+
+    def predict(self, X_test):
+        return self.model.predict(X_test)
+
+    def save_model(self):
+        return self.model.save("model")
