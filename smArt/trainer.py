@@ -1,8 +1,11 @@
 from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras import models, layers
+from tensorflow.keras import models, layers, optimizers
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import EarlyStopping
 import pandas as pd
 import numpy as np
+from sklearn.externals import joblib
+
 
 class Trainer():
     def __init__(self, X_train, y_train):
@@ -75,15 +78,13 @@ class Trainer():
                     epochs=50,
                     batch_size=16,
                     callbacks=[es])
-        return self.model
 
     def evaluate(self, X_test, y_test):
         """evaluates the pipeline on df_test and return the RMSE"""
         accuracy = self.model.evaluate(X_test, y_test)[1]
         return accuracy
 
-    def predict(self, X_test):
-        return self.model.predict(X_test)
-
-    def save_model(self, path):
-        return self.model.save(path)
+    def save_model(self):
+        """Save the model into a .joblib format"""
+        joblib.dump(self.model, 'model.joblib')
+        print("model.joblib saved locally")
