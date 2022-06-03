@@ -1,13 +1,8 @@
 from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras import models, layers, optimizers
-from sklearn.model_selection import train_test_split
+from tensorflow.keras import models, layers
 from tensorflow.keras.callbacks import EarlyStopping
 import pandas as pd
 import numpy as np
-import os
-import matplotlib.pyplot as plt
-import seaborn as sns
-import random
 
 class Trainer():
     def __init__(self, X_train, y_train):
@@ -90,5 +85,5 @@ class Trainer():
     def predict(self, X_test):
         return self.model.predict(X_test)
 
-    def save_model(self):
-        return self.model.save("model")
+    def save_model(self, path):
+        return self.model.save(path)
