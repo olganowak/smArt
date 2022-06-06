@@ -51,7 +51,7 @@ class Preproc():
                             print(counter)
             else:
                 for num in range(len(g)):
-                    with Image.open(g + "/" + g[num]) as im:
+                    with Image.open(self.file_path + genre + "/" + g[num]) as im:
                         img_resized = im.resize(self.size)
                         image_array = np.array(img_resized)
                         string = g[num][:-4]
