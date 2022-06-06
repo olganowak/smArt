@@ -1,9 +1,8 @@
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras import models, layers
 from tensorflow.keras.callbacks import EarlyStopping
-import pandas as pd
 import numpy as np
-from tensorflow.keras.models import save_model
+from PIL import Image
 import joblib
 
 class Trainer():
@@ -86,16 +85,17 @@ class Trainer():
 
     def predict(self, X_test):
         genres =  ["Expressionism", "Impressionism", "Realism", "Romanticism"]
-        array = self.model.predict(X_test)
-
-        result = []
+        new = np.expand_dims(X_test, axis=0)
+        array = self.model.predict(new)
         for x in array:
             i = list(x).index(max(x))
-            result.append(genres[i])
-        return result
+        print(genres[i])
 
-    # def save_model(self, path):
-    #     save_model(self.model, path)
+    def predict_image(self, image_path, size):
+        im = Image.open(image_path)
+        im = im.resize(size)
+        im = np.array(im)
+        return self.predict(im)
 
     def save_joblib(self, path):
         joblib.dump(self.model, path)
