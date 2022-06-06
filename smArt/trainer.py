@@ -1,11 +1,10 @@
 from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras import models, layers, optimizers
-from sklearn.model_selection import train_test_split
+from tensorflow.keras import models, layers
 from tensorflow.keras.callbacks import EarlyStopping
 import pandas as pd
 import numpy as np
-from sklearn.externals import joblib
-
+from tensorflow.keras.models import save_model
+import joblib
 
 class Trainer():
     def __init__(self, X_train, y_train):
@@ -78,13 +77,25 @@ class Trainer():
                     epochs=50,
                     batch_size=16,
                     callbacks=[es])
+        return self.model
 
     def evaluate(self, X_test, y_test):
         """evaluates the pipeline on df_test and return the RMSE"""
         accuracy = self.model.evaluate(X_test, y_test)[1]
         return accuracy
 
-    def save_model(self):
-        """Save the model into a .joblib format"""
-        joblib.dump(self.model, 'model.joblib')
-        print("model.joblib saved locally")
+    def predict(self, X_test):
+        genres =  ["Expressionism", "Impressionism", "Realism", "Romanticism"]
+        array = self.model.predict(X_test)
+
+        result = []
+        for x in array:
+            i = list(x).index(max(x))
+            result.append(genres[i])
+        return result
+
+    # def save_model(self, path):
+    #     save_model(self.model, path)
+
+    def save_joblib(self, path):
+        joblib.dump(self.model, path)
