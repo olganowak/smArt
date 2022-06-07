@@ -84,7 +84,11 @@ class Trainer():
         return accuracy
 
     def predict(self, X_test):
-        genres =  ["Expressionism", "Impressionism", "Realism", "Romanticism"]
+        #genres =  ["Expressionism", "Impressionism", "Realism", "Romanticism"]
+        genres = ["Expressionism", "Rococo", "Baroque", "Abstract Expressionism",
+                  "Pop Art", "Color Field Painting", "Romanticism", "Impressionism",
+                  "Cubism", "Northern Renaissance", "Symbolism", "Realism",
+                  "Art Nouveau Modern", "Naive Art Primitivism", "Post Impressionism"]
         new = np.expand_dims(X_test, axis=0)
         array = self.model.predict(new)
         for x in array:
