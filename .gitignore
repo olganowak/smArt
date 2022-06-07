@@ -10,3 +10,4 @@ raw_data/
 *.joblib
 *.npy
 *.sav
+notebooks/test.sav
