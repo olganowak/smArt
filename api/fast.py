@@ -54,20 +54,13 @@ def predict(genre, filename):
     # Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
     # filename = askopenfilename()
     y_pred=1
-
-    X_pred = f'/Users/olganowak/code/olganowak/smArt/raw_data/wikiart/{genre}/{filename}'
-    loaded_model = pickle.load(open("/Users/olganowak/code/olganowak/smArt/notebooks/test.sav", 'rb'))
+    X_pred = Image.open(requests.get(f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}', stream=True).raw)
+    #X_pred = f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}'
+    loaded_model = pickle.load(open("/Users/olganowak/code/olganowak/smArt/notebooks/15_genres.sav", 'rb'))
     #model = joblib.load('/Users/olganowak/code/olganowak/smArt/notebooks/trainer.joblib')
     size = 128, 128
     y_pred = loaded_model.predict_image(X_pred,size)
     return y_pred
-
-X_pred = "/Users/olganowak/code/olganowak/smArt/raw_data/wikiart/Impressionism/alfred-sisley_morning-in-june-saint-mammes-et-les-coteaux-de-la-celle-1884.jpg"
-loaded_model = pickle.load(open("/Users/olganowak/code/olganowak/smArt/notebooks/test.sav", 'rb'))
-#model = joblib.load('/Users/olganowak/code/olganowak/smArt/notebooks/trainer.joblib')
-size = 128, 128
-y_pred = loaded_model.predict_image(X_pred,size)
-print(y_pred)
 
 # app.add_middleware(
 #     CORSMiddleware,
