@@ -88,18 +88,19 @@ class Trainer():
         genres = ['Expressionism',
                 'Rococo',
                 'Baroque',
-                'Abstract_Expressionism',
-                'Pop_Art',
-                'Color_Field_Painting',
+                'Abstract Expressionism',
+                'Pop Art',
+                'Color Field Painting',
                 'Romanticism',
                 'Impressionism',
                 'Cubism',
-                'Northern_Renaissance',
+                'Northern Renaissance',
                 'Symbolism',
                 'Realism',
                 'Art Nouveau Modern',
                 'Naive Art Primitivism',
                 'Post Impressionism']
+
         new = np.expand_dims(X_test, axis=0)
         array = self.model.predict(new)
         for x in array:
