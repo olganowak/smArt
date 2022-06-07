@@ -83,7 +83,7 @@ class Trainer():
         accuracy = self.model.evaluate(X_test, y_test)[1]
         return accuracy
 
-    def predict(self, X_test):
+    def predict(self, X_test)
         #genres =  ["Expressionism", "Impressionism", "Realism", "Romanticism"]
         genres = ["Expressionism", "Rococo", "Baroque", "Abstract Expressionism",
                   "Pop Art", "Color Field Painting", "Romanticism", "Impressionism",
