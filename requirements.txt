@@ -31,4 +31,4 @@ termcolor
 uvicorn
 fastapi
 tensorflow
-PIL
+Pillow
