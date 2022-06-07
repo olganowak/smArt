@@ -89,7 +89,7 @@ class Trainer():
         array = self.model.predict(new)
         for x in array:
             i = list(x).index(max(x))
-        return genres[i]
+        print(genres[i])
 
     def predict_image(self, image_path, size):
         im = Image.open(image_path)
