@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Thu Jun  2 15:30:38 2022
+# Make data base, printed on Wed Jun  8 10:51:51 2022
 
 # Variables
 
@@ -48,7 +48,7 @@ __CFBundleIdentifier = com.microsoft.VSCode
 # makefile (from `Makefile', line 47)
 PYPI_USERNAME = <AUTHOR>
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/d7/ns81cvcs75q1gk1wshhtnt4m0000gn/T/vscode-ipc-06294ba3-3662-46f1-9eda-93fae662486c.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/d7/ns81cvcs75q1gk1wshhtnt4m0000gn/T/vscode-ipc-ef455ccb-6d00-4a25-b895-96eb34cfe77d.sock
 # environment
 VSCODE_CWD = /Users/olganowak/code/olganowak/smArt
 # environment
@@ -56,9 +56,9 @@ PATH = /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin:./bin:./
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-VIRTUAL_ENV = /Users/olganowak/.pyenv/versions/3.8.13/envs/lewagon
+VIRTUAL_ENV = /Users/olganowak/.pyenv/versions/3.8.13/envs/smArt
 # environment
-LaunchInstanceID = BBE205E3-DCD1-43C2-9E06-03441CC52FE0
+LaunchInstanceID = 2F7B10FB-4374-44F0-BACE-9208334C38D9
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -68,7 +68,7 @@ PYENV_ROOT = /Users/olganowak/.pyenv
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.o99kWSAiuw/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.672NDGb3LT/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -116,7 +116,7 @@ USER = olganowak
 # makefile
 .DEFAULT_GOAL := install_requirements
 # environment
-TERM_SESSION_ID = 807EFE89-54DD-495E-BB93-71C379411A5A
+TERM_SESSION_ID = 05763F7D-608A-4027-84F1-44FE940E5A57
 # environment
 LESS = -R
 # automatic
@@ -134,7 +134,7 @@ TMPDIR = /var/folders/d7/ns81cvcs75q1gk1wshhtnt4m0000gn/T/
 # environment
 VSCODE_IPC_HOOK = /Users/olganowak/Library/Application Support/Code/1.67.2-main.sock
 # environment
-PYTHONPATH = /Users/olganowak/code/olganowak/data-challenges/04-Decision-Science:
+PYTHONPATH = /Users/code/olganowak/smArt/smArt
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -146,7 +146,7 @@ TERM_PROGRAM_VERSION = 445
 # environment
 NVM_DIR = /Users/olganowak/.nvm
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.10490233.10490239.141DE030-FD72-4026-B7C0-4905D941719D
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.10490233.10490239.11DC5D14-B69B-4534-88C0-74E2BBC8B8BD
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -168,7 +168,7 @@ LC_ALL = C
 # environment
 PYENV_VIRTUALENV_DISABLE_PROMPT = 1
 # environment
-PYENV_VIRTUAL_ENV = /Users/olganowak/.pyenv/versions/3.8.13/envs/lewagon
+PYENV_VIRTUAL_ENV = /Users/olganowak/.pyenv/versions/3.8.13/envs/smArt
 # environment
 SECURITYSESSIONID = 186a4
 # automatic
@@ -186,7 +186,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 23381
+VSCODE_PID = 395
 # variable set hash-table stats:
 # Load=88/1024=9%, Rehash=0, Collisions=2/114=2%
 
@@ -196,9 +196,9 @@ VSCODE_PID = 23381
 
 # Directories
 
-# . (device 16777224, inode 11936023): 18 files, no impossibilities.
+# . (device 16777223, inode 11936023): 23 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 23 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -248,7 +248,7 @@ pypi:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-30 14:09:52
+#  Last modified 2022-06-06 17:22:22
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -305,8 +305,8 @@ clean:
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `'
 #  File does not exist.
- 
 #  File has been updated.
+ 
 #  Needs to be updated (-q is set).
 # automatic
 # @ := clean
@@ -351,6 +351,14 @@ pypi_test:
 	@twine upload -r testpypi dist/* -u $(PYPI_USERNAME)
 	
 
+run_api:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 58):
+	uvicorn api.fast:app --reload
+	
+
 install:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -360,7 +368,7 @@ install:
 	
 
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/34=0%
+# Load=16/1024=2%, Rehash=0, Collisions=0/35=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -372,6 +380,6 @@ install:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Jun  2 15:30:38 2022
+# Finished Make data base on Wed Jun  8 10:51:51 2022
 
  
