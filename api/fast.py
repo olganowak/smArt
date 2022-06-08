@@ -56,7 +56,7 @@ def predict(genre, filename):
     y_pred=1
     X_pred = Image.open(requests.get(f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}', stream=True).raw)
     #X_pred = f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}'
-    loaded_model = pickle.load(open("/Users/olganowak/code/olganowak/smArt/notebooks/15_genres.sav", 'rb'))
+    loaded_model = pickle.load(open("/Users/olganowak/code/olganowak/smArt/raw_data/15_genres_accuracy_53.sav", 'rb'))
     #model = joblib.load('/Users/olganowak/code/olganowak/smArt/notebooks/trainer.joblib')
     size = 128, 128
     y_pred = loaded_model.predict_image(X_pred,size)

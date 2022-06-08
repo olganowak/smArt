@@ -9,8 +9,5 @@ raw_data/
 *.jpg
 *.joblib
 *.npy
-<<<<<<< HEAD
 *.sav
 notebooks/test.sav
-=======
->>>>>>> 161af107a16dc705f6d94bbf4785234925cb9e02
