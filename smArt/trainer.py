@@ -90,7 +90,7 @@ class Trainer():
                 'Baroque',
                 'Abstract Expressionism',
                 'Pop Art',
-                'Color Field_Painting',
+                'Color Field Painting',
                 'Romanticism',
                 'Impressionism',
                 'Cubism',
@@ -100,6 +100,7 @@ class Trainer():
                 'Art Nouveau Modern',
                 'Naive Art Primitivism',
                 'Post Impressionism']
+
         new = np.expand_dims(X_test, axis=0)
         array = self.model.predict(new)
         for x in array:
