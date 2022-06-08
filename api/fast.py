@@ -1,19 +1,14 @@
-from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import Response
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
-import pandas as pd
-import numpy as np
-import joblib
 import requests
-import os
-import uuid
 from PIL import Image
 import pickle
-root_path = "/Users/olganowak/code/olganowak/smArt/smArt/"
+root_path = "/home/quan/code/qnguyen-gh/smArt/smArt"
+#root_path = requests.get("https://storage.googleapis.com/artdataset",stream=True)
 import sys; sys.path
 sys.path.append(root_path)
 from smArt.trainer import Trainer
+from google.cloud import storage
 
 app = FastAPI()
 
@@ -51,35 +46,19 @@ def index():
 
 @app.get("/predict/")
 def predict(genre, filename):
-    # Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
-    # filename = askopenfilename()
-    y_pred=1
+
     X_pred = Image.open(requests.get(f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}', stream=True).raw)
-    #X_pred = f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}'
-    loaded_model = pickle.load(open("/Users/olganowak/code/olganowak/smArt/raw_data/15_genres_accuracy_53.sav", 'rb'))
-    #model = joblib.load('/Users/olganowak/code/olganowak/smArt/notebooks/trainer.joblib')
+    ## what I tried
+    data_file = 'test.sav'
+    client = storage.Client().bucket("artdataset")
+    blob = client.blob(data_file)
+    blob.download_to_filename(data_file)
+    loaded_model = pickle.load(open(data_file, "rb"))
+    # loaded_model = pickle.load(open("/home/quan/code/qnguyen-gh/smArt/test.sav", 'rb'))
     size = 128, 128
     y_pred = loaded_model.predict_image(X_pred,size)
     return y_pred
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  # Allows all origins
-#     allow_credentials=True,
-#     allow_methods=["*"],  # Allows all methods
-#     allow_headers=["*"],  # Allows all headers
-# )
-
-# @app.get("/")
-# def index():
-#     return {"greeting": "Hello there"}
-
-# @app.get("/predict")
-# def predict(some_file_path):
-#     X_pred = some_file_path
-#     model = joblib.load('model.joblib')
-#     y_pred=model.predict(X_pred)
-#     return y_pred
 
 # @app.post("/uploadfile")
 # async def create_upload_file(file: UploadFile=File(...)):
