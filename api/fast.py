@@ -10,10 +10,11 @@ import os
 import uuid
 from PIL import Image
 import pickle
-root_path = "/Users/olganowak/code/olganowak/smArt/smArt/"
+#root_path = "/Users/olganowak/code/olganowak/smArt/smArt/"
 import sys; sys.path
-sys.path.append(root_path)
+#sys.path.append(root_path)
 from smArt.trainer import Trainer
+from google.cloud import storage
 
 app = FastAPI()
 
@@ -51,13 +52,15 @@ def index():
 
 @app.get("/predict/")
 def predict(genre, filename):
-    # Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
-    # filename = askopenfilename()
     y_pred=1
     X_pred = Image.open(requests.get(f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}', stream=True).raw)
-    #X_pred = f'https://storage.googleapis.com/artdataset/wikiart_sample/{genre}/{filename}'
+    ## what I tried
+    # data_file = 'test.sav'
+    # client = storage.Client().bucket("artdataset")
+    # blob = client.blob(data_file)
+    # blob.download_to_filename(data_file)
+    # loaded_model = pickle.load(open(data_file, "rb"))
     loaded_model = pickle.load(open("/Users/olganowak/code/olganowak/smArt/notebooks/15_genres.sav", 'rb'))
-    #model = joblib.load('/Users/olganowak/code/olganowak/smArt/notebooks/trainer.joblib')
     size = 128, 128
     y_pred = loaded_model.predict_image(X_pred,size)
     return y_pred
